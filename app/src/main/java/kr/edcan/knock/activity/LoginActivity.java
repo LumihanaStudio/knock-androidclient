@@ -117,10 +117,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                 @Override
                 public void failure(RetrofitError error) {
-                    if (error.getResponse().getStatus() == 400)
-                        Toast.makeText(getApplicationContext(), "아이디 또는 비밀번호가 잘못되었습니다!", Toast.LENGTH_SHORT).show();
-                    else
-                        Toast.makeText(LoginActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                    if (error.getResponse() == null) {
+                        Toast.makeText(LoginActivity.this, "서버로부터의 응답이 없습니다.", Toast.LENGTH_SHORT).show();
+                    } else {
+                        if (error.getResponse().getStatus() == 400)
+                            Toast.makeText(getApplicationContext(), "아이디 또는 비밀번호가 잘못되었습니다!", Toast.LENGTH_SHORT).show();
+                        else
+                            Toast.makeText(LoginActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
         }
